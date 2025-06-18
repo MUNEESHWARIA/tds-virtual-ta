@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
-import os
 import json
+import os
 import base64
 from io import BytesIO
 import re
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -13,163 +14,175 @@ def load_knowledge_base():
         with open('kb.json', 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        # Fallback knowledge base if file doesn't exist
-        return [
-            {
-                "keywords": ["gpt", "model", "ai", "proxy"],
-                "related_terms": ["gpt-4o-mini", "gpt-3.5-turbo", "openai"],
-                "category": ["ai", "model"],
-                "answer": "You must use `gpt-3.5-turbo-0125`, even if the AI Proxy only supports `gpt-4o-mini`. Use the OpenAI API directly for this question.",
-                "links": [
-                    {
-                        "url": "https://discourse.onlinedegree.iitm.ac.in/t/ga5-question-8-clarification/155939/4",
-                        "text": "Use the model that's mentioned in the question."
-                    }
-                ]
-            },
-            {
-                "keywords": ["python", "setup", "install"],
-                "related_terms": ["environment", "pip", "conda"],
-                "category": ["python", "setup"],
-                "answer": "To set up Python for TDS, install Python 3.8+, create a virtual environment, and install required packages using pip install -r requirements.txt",
-                "links": [
-                    {
-                        "url": "https://discourse.onlinedegree.iitm.ac.in/t/python-setup-guide/123",
-                        "text": "Python Setup Guide for TDS"
-                    }
-                ]
-            }
-        ]
+        return []
 
 knowledge_base = load_knowledge_base()
 
-def find_answer(question, image=None):
+def find_best_answer(question, image_data=None):
     """Find the best answer for a given question"""
     question_lower = question.lower()
     
-    # Score each knowledge base entry
-    best_match = None
-    best_score = 0
+    # Score each answer based on keyword matches
+    best_matches = []
     
     for entry in knowledge_base:
         score = 0
         
-        # Score based on keywords
+        # Check keyword matches
         for keyword in entry.get('keywords', []):
             if keyword.lower() in question_lower:
-                score += 3
-        
-        # Score based on related terms
-        for term in entry.get('related_terms', []):
-            if term.lower() in question_lower:
                 score += 2
         
-        # Score based on category
-        for cat in entry.get('category', []):
-            if cat.lower() in question_lower:
+        # Check related terms
+        for term in entry.get('related_terms', []):
+            if term.lower() in question_lower:
                 score += 1
         
-        if score > best_score:
-            best_score = score
-            best_match = entry
+        # Boost score for category matches
+        for category in entry.get('category', []):
+            if category.lower() in question_lower:
+                score += 1.5
+        
+        if score > 0:
+            best_matches.append((score, entry))
     
-    if best_match:
-        return {
-            "answer": best_match.get('answer', 'I found some information but cannot provide a specific answer.'),
-            "links": best_match.get('links', [])
-        }
-    else:
-        # Default fallback answer
-        return {
-            "answer": "I don't have specific information about this topic in my knowledge base. Please refer to the course materials or ask on the TDS Discourse forum for more help.",
-            "links": [
-                {
-                    "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
-                    "text": "TDS Discourse Forum"
-                }
-            ]
-        }
+    # Sort by score and return best match
+    if best_matches:
+        best_matches.sort(key=lambda x: x[0], reverse=True)
+        return best_matches[0][1]
+    
+    # Default response if no match found
+    return {
+        "answer": "I don't have specific information about that topic. Please check the course materials or ask on the Discourse forum for more detailed help.",
+        "links": [
+            {
+                "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+                "text": "TDS Discourse Forum - Ask your question here"
+            }
+        ]
+    }
 
-@app.route('/', methods=['GET', 'POST'])
-def api_endpoint():
-    """Main API endpoint that handles both GET and POST requests"""
-    
-    if request.method == 'GET':
+def handle_question():
+    """Main question handling logic"""
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "error": "Invalid JSON data",
+                "usage": {
+                    "method": "POST",
+                    "body": {
+                        "question": "Your question here",
+                        "image": "Optional base64 encoded image"
+                    }
+                }
+            }), 400
+        
+        question = data.get('question', '').strip()
+        image_data = data.get('image', '')
+        
+        if not question:
+            return jsonify({
+                "error": "Question is required",
+                "usage": {
+                    "method": "POST",
+                    "body": {
+                        "question": "Your question here",
+                        "image": "Optional base64 encoded image"
+                    }
+                }
+            }), 400
+        
+        # Process image if provided (basic validation)
+        if image_data:
+            try:
+                # Validate base64 image data
+                base64.b64decode(image_data[:100])  # Just validate first part
+            except:
+                image_data = None
+        
+        # Find best answer
+        result = find_best_answer(question, image_data)
+        
+        # Ensure proper response format
+        response = {
+            "answer": result.get("answer", "No answer available"),
+            "links": result.get("links", [])
+        }
+        
+        return jsonify(response)
+        
+    except Exception as e:
         return jsonify({
-            "message": "TDS Virtual TA API is running",
-            "usage": "Send POST request with JSON containing 'question' and optional 'image' (base64)",
-            "example": {
-                "question": "How do I setup Python for TDS?",
-                "image": "optional_base64_encoded_image"
+            "error": f"Internal server error: {str(e)}",
+            "usage": {
+                "method": "POST",
+                "body": {
+                    "question": "Your question here",
+                    "image": "Optional base64 encoded image"
+                }
+            }
+        }), 500
+
+# Main API endpoint - handles both root and /api/ paths
+@app.route('/', methods=['GET', 'POST'])
+def root():
+    if request.method == 'POST':
+        return handle_question()
+    else:
+        return jsonify({
+            "message": "TDS Virtual TA API",
+            "version": "1.0",
+            "endpoints": {
+                "GET /": "API information",
+                "POST /": "Submit questions to the Virtual TA",
+                "GET /health": "Health check",
+                "POST /api/": "Submit questions to the Virtual TA (alternative endpoint)"
+            },
+            "usage": {
+                "method": "POST",
+                "url": "/",
+                "body": {
+                    "question": "Your question here",
+                    "image": "Optional base64 encoded image"
+                }
             }
         })
-    
-    elif request.method == 'POST':
-        try:
-            # Get JSON data from request
-            data = request.get_json()
-            
-            if not data:
-                return jsonify({
-                    "error": "No JSON data provided"
-                }), 400
-            
-            question = data.get('question', '').strip()
-            image = data.get('image', None)
-            
-            if not question:
-                return jsonify({
-                    "error": "Question field is required"
-                }), 400
-            
-            # Process the image if provided (basic validation)
-            if image:
-                try:
-                    # Validate base64 format
-                    base64.b64decode(image[:100])  # Just validate first 100 chars
-                except Exception:
-                    return jsonify({
-                        "error": "Invalid base64 image format"
-                    }), 400
-            
-            # Find answer
-            result = find_answer(question, image)
-            
-            return jsonify(result)
-            
-        except Exception as e:
-            return jsonify({
-                "error": f"Internal server error: {str(e)}"
-            }), 500
 
-@app.route('/api/', methods=['GET', 'POST'])
-def api_endpoint_alt():
-    """Alternative API endpoint for /api/ path"""
-    return api_endpoint()
+# Alternative API endpoint for backward compatibility
+@app.route('/api/', methods=['POST'])
+def api():
+    return handle_question()
 
+# Health check endpoint
 @app.route('/health', methods=['GET'])
-def health_check():
-    """Health check endpoint"""
+def health():
     return jsonify({
         "status": "healthy",
-        "message": "TDS Virtual TA is running properly"
+        "timestamp": datetime.utcnow().isoformat(),
+        "service": "TDS Virtual TA",
+        "version": "1.0"
     })
 
-@app.errorhandler(404)
-def not_found(error):
+# API info endpoint
+@app.route('/api/', methods=['GET'])
+def api_info():
     return jsonify({
-        "error": "Endpoint not found",
-        "message": "Use POST / or POST /api/ with JSON data containing 'question' field"
-    }), 404
-
-@app.errorhandler(405)
-def method_not_allowed(error):
-    return jsonify({
-        "error": "Method not allowed",
-        "message": "Use POST method with JSON data"
-    }), 405
+        "message": "TDS Virtual TA API",
+        "version": "1.0",
+        "endpoint": "/api/",
+        "methods": ["POST"],
+        "usage": {
+            "method": "POST",
+            "url": "/api/",
+            "body": {
+                "question": "Your question here",
+                "image": "Optional base64 encoded image"
+            }
+        }
+    })
 
 if __name__ == '__main__':
-    # Use PORT environment variable if available (for Railway/Heroku)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
