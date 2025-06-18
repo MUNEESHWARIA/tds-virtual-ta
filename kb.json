@@ -1,8 +1,8 @@
 [
   {
-    "keywords": ["gpt", "model", "ai", "proxy", "gpt-4o-mini", "gpt3.5", "turbo"],
-    "related_terms": ["openai", "api", "token", "rate"],
-    "category": ["ai", "model", "assignment"],
+    "keywords": ["gpt-4o-mini", "gpt-3.5-turbo", "ai", "proxy", "model"],
+    "related_terms": ["openai", "api", "token", "usage"],
+    "category": ["ai", "api", "assignment"],
     "answer": "You must use `gpt-3.5-turbo-0125`, even if the AI Proxy only supports `gpt-4o-mini`. Use the OpenAI API directly for this question.",
     "links": [
       {
@@ -17,109 +17,85 @@
   },
   {
     "keywords": ["python", "setup", "install", "environment"],
-    "related_terms": ["pip", "conda", "virtual", "requirements"],
-    "category": ["python", "setup"],
-    "answer": "To set up Python for TDS: 1) Install Python 3.8+, 2) Create a virtual environment using `python -m venv tds_env`, 3) Activate it with `source tds_env/bin/activate` (Linux/Mac) or `tds_env\\Scripts\\activate` (Windows), 4) Install packages with `pip install -r requirements.txt`",
+    "related_terms": ["pip", "conda", "virtual", "venv", "anaconda"],
+    "category": ["python", "setup", "installation"],
+    "answer": "To set up Python for TDS, you need Python 3.8+ with pip. Create a virtual environment using `python -m venv tds_env` and activate it. Install required packages using `pip install -r requirements.txt`. Make sure to use the same Python version consistently throughout the course.",
     "links": [
       {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/python-installation-guide",
-        "text": "Python Installation Guide"
+        "url": "https://discourse.onlinedegree.iitm.ac.in/t/python-setup-guide/12345",
+        "text": "Complete Python setup guide for TDS"
       }
     ]
   },
   {
-    "keywords": ["assignment", "submission", "deadline", "late"],
-    "related_terms": ["due", "extension", "penalty"],
-    "category": ["assignment", "policy"],
-    "answer": "Assignments must be submitted by the specified deadline. Late submissions may incur penalties as per course policy. Check the course schedule for exact deadlines.",
+    "keywords": ["assignment", "submission", "deadline", "grading"],
+    "related_terms": ["marks", "evaluation", "score", "late"],
+    "category": ["assignment", "academic"],
+    "answer": "Check the assignment submission guidelines on the course portal. Make sure to submit before the deadline and follow the required format. Late submissions may incur penalties as per course policy.",
     "links": [
       {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/assignment-policy",
-        "text": "Assignment Submission Policy"
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Course Discussion Forum"
       }
     ]
   },
   {
-    "keywords": ["jupyter", "notebook", "colab", "google"],
-    "related_terms": ["kernel", "cell", "markdown"],
-    "category": ["jupyter", "tools"],
-    "answer": "You can use Jupyter Notebook locally or Google Colab for assignments. For local setup: `pip install jupyter` then `jupyter notebook`. For Colab, visit colab.research.google.com",
+    "keywords": ["api", "rest", "endpoint", "flask"],
+    "related_terms": ["post", "get", "json", "response", "request"],
+    "category": ["api", "web", "programming"],
+    "answer": "For creating REST APIs, use Flask with proper error handling. Define endpoints with appropriate HTTP methods (GET, POST, etc.). Always return JSON responses with proper status codes. Include input validation and documentation.",
     "links": [
       {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/jupyter-setup-guide",
-        "text": "Jupyter Notebook Setup Guide"
+        "url": "https://discourse.onlinedegree.iitm.ac.in/t/flask-api-best-practices/12346",
+        "text": "Flask API development best practices"
       }
     ]
   },
   {
-    "keywords": ["api", "rest", "http", "request"],
-    "related_terms": ["get", "post", "json", "curl"],
-    "category": ["api", "web"],
-    "answer": "REST APIs use HTTP methods (GET, POST, PUT, DELETE) to interact with web services. Use libraries like `requests` in Python: `import requests; response = requests.get('https://api.example.com')`",
-    "links": [
-      {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/api-tutorial",
-        "text": "API Tutorial for TDS"
-      }
-    ]
-  },
-  {
-    "keywords": ["git", "github", "version", "control"],
-    "related_terms": ["clone", "commit", "push", "pull", "branch"],
-    "category": ["git", "tools"],
-    "answer": "Git is used for version control. Basic commands: `git clone <url>`, `git add .`, `git commit -m 'message'`, `git push`. Create a GitHub account and repository for your projects.",
-    "links": [
-      {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/git-tutorial",
-        "text": "Git Tutorial for TDS"
-      }
-    ]
-  },
-  {
-    "keywords": ["docker", "container", "deployment"],
-    "related_terms": ["dockerfile", "image", "build", "run"],
-    "category": ["docker", "deployment"],
-    "answer": "Docker containerizes applications for consistent deployment. Create a Dockerfile, build with `docker build -t myapp .`, run with `docker run -p 5000:5000 myapp`",
-    "links": [
-      {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/docker-guide",
-        "text": "Docker Guide for TDS"
-      }
-    ]
-  },
-  {
-    "keywords": ["flask", "web", "server", "app"],
-    "related_terms": ["route", "render", "template"],
-    "category": ["flask", "web"],
-    "answer": "Flask is a Python web framework. Basic app: `from flask import Flask; app = Flask(__name__); @app.route('/'); def home(): return 'Hello!'; app.run()`",
-    "links": [
-      {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/flask-tutorial",
-        "text": "Flask Tutorial for TDS"
-      }
-    ]
-  },
-  {
-    "keywords": ["railway", "deployment", "hosting", "cloud"],
-    "related_terms": ["heroku", "render", "vercel"],
+    "keywords": ["deployment", "railway", "heroku", "hosting"],
+    "related_terms": ["production", "cloud", "server", "url"],
     "category": ["deployment", "hosting"],
-    "answer": "Railway is a cloud platform for deploying applications. Connect your GitHub repo, Railway auto-detects your app type and deploys. Set environment variables as needed.",
+    "answer": "For deployment, you can use platforms like Railway, Heroku, or Render. Make sure your app listens on the PORT environment variable, include a Procfile or start command, and ensure all dependencies are in requirements.txt. Test your deployed endpoint thoroughly.",
     "links": [
       {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/deployment-guide",
-        "text": "Deployment Guide for TDS"
+        "url": "https://discourse.onlinedegree.iitm.ac.in/t/deployment-guide/12347",
+        "text": "Step-by-step deployment guide"
       }
     ]
   },
   {
-    "keywords": ["error", "debug", "troubleshoot", "bug"],
-    "related_terms": ["exception", "traceback", "fix"],
+    "keywords": ["error", "debug", "troubleshooting", "bug"],
+    "related_terms": ["fix", "problem", "issue", "solution"],
     "category": ["debugging", "help"],
-    "answer": "For debugging: 1) Read error messages carefully, 2) Check the traceback, 3) Use print statements or debugger, 4) Search the error online, 5) Ask on Discourse with full error details.",
+    "answer": "When debugging, check error logs first, ensure proper error handling in your code, validate input data format, and test endpoints individually. Common issues include missing dependencies, wrong HTTP methods, or malformed JSON.",
     "links": [
       {
-        "url": "https://discourse.onlinedegree.iitm.ac.in/t/debugging-tips",
-        "text": "Debugging Tips for TDS"
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "Ask for help on TDS forum"
+      }
+    ]
+  },
+  {
+    "keywords": ["github", "repository", "license", "mit"],
+    "related_terms": ["public", "code", "version", "control"],
+    "category": ["github", "project"],
+    "answer": "Ensure your GitHub repository is public and includes an MIT LICENSE file in the root directory. Your repository should have clear documentation, proper file structure, and working code. Follow the project submission guidelines exactly.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/t/github-setup-guide/12348",
+        "text": "GitHub repository setup guide"
+      }
+    ]
+  },
+  {
+    "keywords": ["data", "scraping", "discourse", "posts"],
+    "related_terms": ["extract", "crawl", "collect", "parse"],
+    "category": ["data", "scraping"],
+    "answer": "For scraping Discourse posts, use proper rate limiting, handle pagination, respect robots.txt, and parse HTML/JSON responses carefully. Include date range filtering and category selection. Always be respectful of the server resources.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/t/data-scraping-guidelines/12349",
+        "text": "Data scraping best practices"
       }
     ]
   }
