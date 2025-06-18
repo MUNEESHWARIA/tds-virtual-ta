@@ -1,15 +1,137 @@
 [
   {
-    "keywords": ["gpt-4o-mini", "gpt3.5 turbo", "model"],
+    "keywords": ["gpt-4o-mini", "gpt3.5 turbo", "gpt-3.5-turbo", "model", "openai"],
+    "related_terms": ["api", "proxy", "billing", "tokens"],
+    "category": ["ai", "api"],
     "answer": "You must use `gpt-3.5-turbo-0125`, even if the AI Proxy only supports `gpt-4o-mini`. Use the OpenAI API directly for this question.",
     "links": [
       {
         "url": "https://discourse.onlinedegree.iitm.ac.in/t/ga5-question-8-clarification/155939/4",
-        "text": "Use the model that’s mentioned in the question."
+        "text": "Use the model that's mentioned in the question."
       },
       {
         "url": "https://discourse.onlinedegree.iitm.ac.in/t/ga5-question-8-clarification/155939/3",
         "text": "Prof. Anand's explanation about tokens and billing."
+      }
+    ]
+  },
+  {
+    "keywords": ["assignment", "submission", "deadline", "graded assignment"],
+    "related_terms": ["ga", "submit", "due date", "late submission"],
+    "category": ["assignment", "grading"],
+    "answer": "For assignment submissions, make sure to follow the exact format specified in the instructions. Check the deadline on the course page and submit before the due time. Late submissions may have penalties.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Course Discussion Forum"
+      }
+    ]
+  },
+  {
+    "keywords": ["python", "jupyter", "notebook", "environment", "setup"],
+    "related_terms": ["install", "package", "library", "import", "conda", "pip"],
+    "category": ["python", "setup"],
+    "answer": "For Python setup, use the recommended environment setup from the course materials. Install required packages using pip or conda as specified in the requirements. Make sure your Jupyter notebook environment is properly configured.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Course Setup Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["pandas", "dataframe", "data manipulation", "csv"],
+    "related_terms": ["read_csv", "groupby", "merge", "join", "filter"],
+    "category": ["python", "data"],
+    "answer": "For pandas operations, refer to the course notebooks and documentation. Common operations include reading CSV files with pd.read_csv(), data manipulation with groupby(), and merging dataframes. Make sure to handle missing values appropriately.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Data Manipulation Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["git", "github", "version control", "repository"],
+    "related_terms": ["commit", "push", "pull", "branch", "merge", "clone"],
+    "category": ["git", "tools"],
+    "answer": "For Git and GitHub usage, make sure to commit your changes regularly, use meaningful commit messages, and push to your repository. For assignments, ensure your repository is public and includes all required files including LICENSE.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Git Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["api", "rest", "flask", "endpoint", "json"],
+    "related_terms": ["post", "get", "request", "response", "curl", "http"],
+    "category": ["api", "web"],
+    "answer": "For API development, use Flask or FastAPI to create endpoints. Ensure your API accepts POST requests with JSON data and returns properly formatted responses. Test your endpoints with curl or Postman before submission.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS API Development Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["deployment", "hosting", "railway", "heroku", "render"],
+    "related_terms": ["deploy", "host", "url", "public", "access"],
+    "category": ["deployment", "hosting"],
+    "answer": "For deployment, you can use platforms like Railway, Render, or Heroku. Make sure your application includes a requirements.txt file and proper configuration. Your deployed URL should be publicly accessible for evaluation.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Deployment Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["scraping", "web scraping", "beautifulsoup", "requests"],
+    "related_terms": ["html", "parsing", "data extraction", "crawling"],
+    "category": ["scraping", "data"],
+    "answer": "For web scraping, use libraries like requests and BeautifulSoup. Be respectful of website terms of service and implement proper error handling. For Discourse scraping, handle pagination and rate limiting appropriately.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Web Scraping Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["machine learning", "ml", "model", "training", "sklearn"],
+    "related_terms": ["algorithm", "prediction", "classification", "regression", "feature"],
+    "category": ["ml", "data science"],
+    "answer": "For machine learning tasks, start with data preprocessing and feature engineering. Use scikit-learn for basic algorithms. Make sure to split your data properly into train/test sets and evaluate model performance using appropriate metrics.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Machine Learning Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["database", "sql", "sqlite", "query"],
+    "related_terms": ["table", "select", "insert", "update", "join", "where"],
+    "category": ["database", "sql"],
+    "answer": "For database operations, practice SQL queries for data selection, filtering, and joining tables. Use SQLite for local development and testing. Make sure to handle database connections properly and close them after use.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Database Discussion"
+      }
+    ]
+  },
+  {
+    "keywords": ["error", "debug", "troubleshooting", "bug"],
+    "related_terms": ["exception", "traceback", "fix", "issue", "problem"],
+    "category": ["debugging", "help"],
+    "answer": "For debugging, read error messages carefully and check the traceback. Common issues include import errors, syntax errors, and data type mismatches. Use print statements or debugger to trace execution flow.",
+    "links": [
+      {
+        "url": "https://discourse.onlinedegree.iitm.ac.in/c/tds/",
+        "text": "TDS Help and Debugging"
       }
     ]
   }
