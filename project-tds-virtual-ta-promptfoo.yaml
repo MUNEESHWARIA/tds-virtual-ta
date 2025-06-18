@@ -1,0 +1,4 @@
+providers:
+  - provider: rest
+    config:
+      url: "https://your-railway-app.up.railway.app/api/"
